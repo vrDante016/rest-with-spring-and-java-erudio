@@ -3,23 +3,39 @@ package com.erudio.rest_with_spring_and_java_erudio.model;
 
 
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 
+@Entity
+@Table(name = "person")
 public class Person implements Serializable {
     private static long serialVersionUID = 1L;
 
-
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "firstName", nullable = false, length = 80)
     private String firstName;
+    @Column(name = "lastName", nullable = false, length = 80)
     private String lastName;
+    @Column(name = "address", nullable = false, length = 100)
     private String address;
+    @Column(name = "gender", nullable = false, length = 7)
     private String gender;
 
     public Person(){
 
+    }
+
+    public Person(Long id, String firstName, String lastName, String address, String gender) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.gender = gender;
     }
 
     public Long getId() {

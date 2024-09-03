@@ -4,6 +4,7 @@ import com.erudio.rest_with_spring_and_java_erudio.model.Person;
 import com.erudio.rest_with_spring_and_java_erudio.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.print.attribute.standard.Media;
@@ -16,32 +17,37 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @RequestMapping(value =  "/{id}", method = RequestMethod.GET,
+    @GetMapping(value =  "/{id}",
     produces = MediaType.APPLICATION_JSON_VALUE)
     public Person findById(@PathVariable(value = "id") Long id) {
         return personService.findById(id);
     }
     
-    @RequestMapping(method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Person> findAll(){
+
         return personService.findAll();
     }
-    @RequestMapping(method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Person create(@RequestBody Person person){
+
         return personService.create(person);
     }
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
+
+
+    @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Person update(@PathVariable Long id,@RequestBody Person person){
         return personService.update(id, person);
     }
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
-    public void deleteById(@PathVariable(value = "id") Long id){
+
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable(value = "id") Long id){
         personService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 

@@ -1,6 +1,7 @@
 package com.erudio.rest_with_spring_and_java_erudio.service;
 
 import com.erudio.rest_with_spring_and_java_erudio.Respository.PersonRepository;
+import com.erudio.rest_with_spring_and_java_erudio.data.vo.PersonVO;
 import com.erudio.rest_with_spring_and_java_erudio.exception.ResouceNotFoundException;
 import com.erudio.rest_with_spring_and_java_erudio.exceptionHandler.CustomizeResponseEntityExceptionHandler;
 import com.erudio.rest_with_spring_and_java_erudio.model.Person;
@@ -21,23 +22,23 @@ public class PersonService {
     private final AtomicLong counter = new AtomicLong();
     private Logger logger = Logger.getLogger(String.valueOf(PersonService.class));
 
-    public List<Person> findAll(){
+    public List<PersonVO> findAll(){
         logger.info("Finding all person");
         return personRepository.findAll();
     }
 
-    public Person findById(Long id){
+    public PersonVO findById(Long id){
         logger.info("Finding one Person");
          return personRepository.findById(id)
                 .orElseThrow(() -> new ResouceNotFoundException("No records found for this id"));
 
 
     }
-    public Person create(Person person){
+    public PersonVO create(PersonVO person){
         logger.info("Creating one person");
         return personRepository.save(person);
     }
-    public Person update(Long id, Person person){
+    public PersonVO update(Long id, PersonVO person){
         logger.info("Update one person");
         try{
             Person entity = personRepository.getReferenceById(id);
@@ -48,7 +49,7 @@ public class PersonService {
             throw new ResouceNotFoundException("not found datas from a person");
         }
     }
-    public void updateData(Person entity, Person person){
+    public void updateData(PersonVO entity, PersonVO person){
         entity.setFirstName(person.getFirstName());
         entity.setLastName(person.getLastName());
         entity.setAddress(person.getAddress());

@@ -1,6 +1,7 @@
 package com.erudio.rest_with_spring_and_java_erudio.controller;
 
 import com.erudio.rest_with_spring_and_java_erudio.data.vo.PersonVO;
+import com.erudio.rest_with_spring_and_java_erudio.data.vo2.vo.PersonVO2;
 import com.erudio.rest_with_spring_and_java_erudio.model.Person;
 import com.erudio.rest_with_spring_and_java_erudio.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,13 @@ public class PersonController {
 
         return personService.create(person);
     }
+    @PostMapping(value = "/v2",consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public PersonVO2 create2(@RequestBody PersonVO2 person){
+
+        return personService.create2(person);
+    }
+
 
 
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE,
